@@ -7,12 +7,6 @@
     "indentStyle": "space",
     "lineWidth": 80
   },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "single",
-      "trailingCommas": "es5"
-    }
-  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -25,7 +19,8 @@
         "noUselessElse": "off",
         "noNonNullAssertion": "off",
         "useImportType": "off",
-        "useNodejsImportProtocol": "off"
+        "useNodejsImportProtocol": "off",
+        "useDefaultParameterLast": "off"
       },
       "complexity": {
         "noForEach": "off"
