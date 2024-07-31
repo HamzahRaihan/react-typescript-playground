@@ -14,7 +14,6 @@ const initialState: TodoState = {
 
 const TodoReducer = (
   state = initialState,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: PayloadAction<any>
 ): TodoState => {
   switch (action.type) {

@@ -10,13 +10,15 @@ import {
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 import {
+  Cross1Icon,
   GitHubLogoIcon,
+  HamburgerMenuIcon,
   InstagramLogoIcon,
   Share1Icon,
 } from '@radix-ui/react-icons';
-import { Moon, Sun } from 'lucide-react';
+import { ChevronDown, Moon, Sun } from 'lucide-react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from '../dropdown-menu';
 import { Button } from '../button';
+import { Sheet, SheetContent, SheetTrigger } from '../sheet';
 
 type Components = {
   title: string;
@@ -74,9 +77,86 @@ function ModeToggle() {
   );
 }
 
+const SheetSide = () => {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost" className="group">
+          <HamburgerMenuIcon className="h-5 w-5 group-data-[state=closed]:scale-100 scale-0 transition-all" />
+          <Cross1Icon className="absolute h-5 w-5 group-data-[state=open]:scale-100 scale-0 group-data-[state=open]:rotate-180 transition-all" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right">
+        <div className="flex flex-col gap-4">
+          <Link to="/">
+            <NavigationMenuLink>
+              <div className="flex gap-2 items-center">
+                <Share1Icon width="20" height="20" />
+                <div>
+                  tod<span className="text-red-500 font-bold">O</span>o
+                </div>
+              </div>
+            </NavigationMenuLink>
+          </Link>
+
+          <div className="flex flex-col gap-4 mt-10">
+            <NavLink
+              to="/"
+              className={(isActive) => isActive && 'text-zinc-600'}
+            >
+              <NavigationMenuLink>Documentation</NavigationMenuLink>
+            </NavLink>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex gap-2 items-center group">
+                  Social Media
+                  <ChevronDown className="h-4 w-4 transition-all group-data-[state=open]:rotate-180" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {links.map((link) => (
+                  <DropdownMenuItem key={link.title}>
+                    <div className="flex flex-col">
+                      <div className="text-sm font-medium leading-none flex gap-2">
+                        {link.icon} {link.title}
+                      </div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        {link.desciption}
+                      </p>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+const NavigationMobileComponent = () => {
+  return (
+    <NavigationMenu className="lg:hidden justify-between">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <SheetSide />
+        </NavigationMenuItem>
+      </NavigationMenuList>
+
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <ModeToggle />
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+
 const NavigationComponent = () => {
   return (
-    <NavigationMenu className="justify-between">
+    <NavigationMenu className="justify-between lg:flex hidden">
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link to="/">
@@ -151,6 +231,7 @@ const NavigationBar = () => {
   return (
     <div className="p-2 border-b border-zinc-200 dark:border-zinc-800 px-4">
       <NavigationComponent />
+      <NavigationMobileComponent />
     </div>
   );
 };

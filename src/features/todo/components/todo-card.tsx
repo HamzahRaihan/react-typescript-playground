@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Todo } from '@/types/todo';
+import { formatDate } from '@/utils/date';
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
 
 const TodoCard = ({ id, title, createdAt, description }: Todo) => {
@@ -21,8 +22,8 @@ const TodoCard = ({ id, title, createdAt, description }: Todo) => {
       <CardHeader className="flex flex-row justify-between gap-2">
         <div className="sr-only">{id}</div>
         <div className="w-full">
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{createdAt}</CardDescription>
+          <CardTitle className="text-md">{title}</CardTitle>
+          <CardDescription>{formatDate(createdAt)}</CardDescription>
         </div>
         <div className="w-fit">
           <DropdownMenu>
