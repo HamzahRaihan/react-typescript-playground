@@ -11,7 +11,7 @@ import TodoForm from '@/features/todo/components/todo-form';
 
 const TodoHome = () => {
   return (
-    <div className="container flex justify-center mt-2">
+    <div className="container flex justify-center mt-20">
       <TodoList />
       <div className="fixed lg:left-[85%] bottom-8 left-8">
         <Drawer>

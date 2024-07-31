@@ -1,2 +1,5 @@
 export const START_FETCHING = 'START_FETCHING';
 export const SUCCESS_GET_TODO = 'SUCCESS_GET_TODO';
+export const CREATE_NEW_TODO = 'CREATE_NEW_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+export const SEARCH_TODO = 'SEARCH_TODO';

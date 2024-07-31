@@ -14,11 +14,15 @@ const TodoList: React.FC = () => {
     dispatch(getTodo());
   }, [dispatch]);
 
+  const sortedTodos = [...todos].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
   return (
-    <div className="flex flex-col gap-4 lg:w-2/3 w-full">
+    <div className="flex flex-col gap-4 lg:w-2/3 w-full ">
       {isLoading
         ? 'loading'
-        : todos.map((todo) => (
+        : sortedTodos.map((todo) => (
             <TodoCard
               key={todo.id}
               title={todo.title}

@@ -1,4 +1,11 @@
-import { START_FETCHING, SUCCESS_GET_TODO } from '@/contants/todo-contants';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  CREATE_NEW_TODO,
+  DELETE_TODO,
+  SEARCH_TODO,
+  START_FETCHING,
+  SUCCESS_GET_TODO,
+} from '@/contants/todo-contants';
 import { Todo } from '@/types/todo';
 import { PayloadAction } from '@reduxjs/toolkit';
 
@@ -24,8 +31,25 @@ const TodoReducer = (
       };
     case SUCCESS_GET_TODO:
       return {
-        isLoading: false,
         todos: action.payload,
+        isLoading: false,
+      };
+    case CREATE_NEW_TODO:
+      return {
+        todos: [action.payload, ...state.todos],
+        isLoading: false,
+      };
+    case DELETE_TODO:
+      return {
+        todos: state.todos.filter((todo) => todo.id !== action.payload),
+        isLoading: false,
+      };
+    case SEARCH_TODO:
+      return {
+        todos: state.todos.filter((todo) =>
+          todo.title.toLowerCase().includes(action.payload.toLowerCase())
+        ),
+        isLoading: false,
       };
     default:
       return state;
