@@ -12,17 +12,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { deleteTodo } from '@/state/action/todo-action';
+import { AppDispatch } from '@/state/store';
 import { Todo } from '@/types/todo';
 import { formatDate } from '@/utils/date';
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import { useDispatch } from 'react-redux';
 
-const TodoCard = ({ id, title, createdAt, description }: Todo) => {
+const TodoCard = ({ id, title, createdAt, description, isComplete }: Todo) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between gap-2">
         <div className="sr-only">{id}</div>
         <div className="w-full">
-          <CardTitle className="text-md">{title}</CardTitle>
+          <CardTitle className={`text-md ${isComplete && 'line-through'} `}>
+            {title}
+          </CardTitle>
           <CardDescription>{formatDate(createdAt)}</CardDescription>
         </div>
         <div className="w-fit">
@@ -34,7 +41,10 @@ const TodoCard = ({ id, title, createdAt, description }: Todo) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className=" hover:!bg-red-700 active:!bg-red-800">
+              <DropdownMenuItem
+                className=" hover:!bg-red-700 active:!bg-red-800"
+                onClick={() => dispatch(deleteTodo(id))}
+              >
                 Delete
               </DropdownMenuItem>
               <DropdownMenuItem>Mark as Done</DropdownMenuItem>

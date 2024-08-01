@@ -9,6 +9,8 @@ const TodoList: React.FC = () => {
     (state: RootState) => state.TodoReducer
   );
   const dispatch = useDispatch<AppDispatch>();
+  console.log('🚀 ~ isLoading:', isLoading);
+  console.log('🚀 ~ todos:', todos);
 
   useEffect(() => {
     dispatch(getTodo());
@@ -28,6 +30,7 @@ const TodoList: React.FC = () => {
               title={todo.title}
               createdAt={todo.createdAt}
               description={todo.description}
+              isComplete={todo.isComplete}
               id={todo.id}
             />
           ))}

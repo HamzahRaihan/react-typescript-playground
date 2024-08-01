@@ -1,5 +1,6 @@
 import {
   CREATE_NEW_TODO,
+  DELETE_TODO,
   START_FETCHING,
   SUCCESS_GET_TODO,
 } from '@/contants/todo-contants';
@@ -29,13 +30,19 @@ const createNewTodo = (payload: Todo) => {
   };
 };
 
+const deletedTodo = (payload: number) => {
+  return {
+    type: DELETE_TODO,
+    payload,
+  };
+};
+
 export const getTodo = () => {
   return async (dispatch: Dispatch): Promise<void> => {
     dispatch(startFetching());
 
     try {
       const response: AxiosResponse = await axios.get(url);
-      console.log('🚀 ~ return ~ response:', response);
       dispatch(successGetTodo(response.data));
     } catch (err: unknown) {
       throw new Error((err as Error).message);
@@ -46,10 +53,21 @@ export const getTodo = () => {
 export const addTodo = (todo: Todo) => {
   return async (dispatch: Dispatch): Promise<void> => {
     try {
-      const response: AxiosResponse = await axios.post(url, todo);
-      console.log('🚀 ~ return ~ response:', response);
+      await axios.post(url, todo);
       dispatch(createNewTodo(todo));
     } catch (err: unknown) {
+      throw new Error((err as Error).message);
+    }
+  };
+};
+
+export const deleteTodo = (id: number) => {
+  return async (dispatch: Dispatch): Promise<void> => {
+    try {
+      const response: AxiosResponse = await axios.delete(`${url}/${id}`);
+      console.log(response);
+      dispatch(deletedTodo(id));
+    } catch (err) {
       throw new Error((err as Error).message);
     }
   };

@@ -5,7 +5,6 @@ import { Outlet } from 'react-router';
 const RootLayout = () => {
   return (
     <div className="flex flex-col gap-2 min-h-screen dark:bg-[#09090b] mb-10">
-      <NavigationBar />
       <Suspense
         fallback={
           <div className="h-screen flex items-center justify-center">
@@ -13,6 +12,7 @@ const RootLayout = () => {
           </div>
         }
       >
+        <NavigationBar />
         <Outlet />
       </Suspense>
     </div>

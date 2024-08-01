@@ -3,4 +3,5 @@ export type Todo = {
   title: string;
   description: string;
   id: number;
+  isComplete: boolean;
 };

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CREATE_NEW_TODO,
   DELETE_TODO,
@@ -36,7 +35,7 @@ const TodoReducer = (
       };
     case CREATE_NEW_TODO:
       return {
-        todos: [action.payload, ...state.todos],
+        todos: [...state.todos, action.payload],
         isLoading: false,
       };
     case DELETE_TODO:

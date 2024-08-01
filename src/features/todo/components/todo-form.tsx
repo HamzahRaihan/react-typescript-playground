@@ -34,6 +34,7 @@ const formSchema = z.object({
     }),
   createdAt: z.string(),
   id: z.number(),
+  isComplete: z.boolean(),
 });
 
 const TodoForm = () => {
@@ -46,6 +47,7 @@ const TodoForm = () => {
       description: '',
       createdAt: new Date().toString(),
       id: +new Date(),
+      isComplete: false,
     },
   });
 
