@@ -229,7 +229,7 @@ const ListItem = React.forwardRef<
 
 const NavigationBar = () => {
   return (
-    <div className="fixed top-0 w-full p-2 border-b border-zinc-200 dark:border-zinc-800 px-4 lg z-50 bg-white dark:bg-[#09090b]">
+    <div className="sticky top-0 w-full p-2 border-b border-zinc-200 dark:border-zinc-800 px-4 lg z-50 bg-white dark:bg-[#09090b]">
       <NavigationComponent />
 
       {/* Apply mobile navbar if  min width is 1024px */}

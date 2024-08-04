@@ -1,30 +1,17 @@
+import { Todo } from '@/types/todo';
 import TodoCard from './todo-card';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/state/store';
-import React, { useEffect } from 'react';
-import { getTodo } from '@/state/action/todo-action';
 
-const TodoList: React.FC = () => {
-  const { todos, isLoading } = useSelector(
-    (state: RootState) => state.TodoReducer
-  );
-  const dispatch = useDispatch<AppDispatch>();
-  console.log('🚀 ~ isLoading:', isLoading);
-  console.log('🚀 ~ todos:', todos);
+type TodosProps = {
+  todos: Todo[];
+  isLoading: boolean;
+};
 
-  useEffect(() => {
-    dispatch(getTodo());
-  }, [dispatch]);
-
-  const sortedTodos = [...todos].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-
+const TodoList = ({ todos, isLoading }: TodosProps) => {
   return (
-    <div className="flex flex-col gap-4 lg:w-2/3 w-full ">
+    <div className="flex flex-col gap-4 w-full">
       {isLoading
         ? 'loading'
-        : sortedTodos.map((todo) => (
+        : todos.map((todo) => (
             <TodoCard
               key={todo.id}
               title={todo.title}

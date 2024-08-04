@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { deleteTodo } from '@/state/action/todo-action';
+import { setMarkTodo, deleteTodo } from '@/state/action/todo-action';
 import { AppDispatch } from '@/state/store';
 import { Todo } from '@/types/todo';
 import { formatDate } from '@/utils/date';
@@ -47,7 +47,39 @@ const TodoCard = ({ id, title, createdAt, description, isComplete }: Todo) => {
               >
                 Delete
               </DropdownMenuItem>
-              <DropdownMenuItem>Mark as Done</DropdownMenuItem>
+              {!isComplete ? (
+                <DropdownMenuItem
+                  onClick={() =>
+                    dispatch(
+                      setMarkTodo({
+                        id,
+                        title,
+                        createdAt,
+                        description,
+                        isComplete: true,
+                      })
+                    )
+                  }
+                >
+                  Mark as Done
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  onClick={() =>
+                    dispatch(
+                      setMarkTodo({
+                        id,
+                        title,
+                        createdAt,
+                        description,
+                        isComplete: false,
+                      })
+                    )
+                  }
+                >
+                  Undo
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

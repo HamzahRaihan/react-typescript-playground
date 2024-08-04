@@ -11,8 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/state/store';
 import { addTodo } from '@/state/action/todo-action';
 
 const formSchema = z.object({
@@ -38,6 +38,15 @@ const formSchema = z.object({
 });
 
 const TodoForm = () => {
+  const { ongoingTodo, completedTodo } = useSelector(
+    (state: RootState) => state.TodoReducer
+  );
+
+  // Combine the arrays and find the maximum id directly
+  const latestId = Math.max(
+    ...ongoingTodo.concat(completedTodo).map((todo) => todo.id)
+  );
+
   const dispatch = useDispatch<AppDispatch>();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,12 +55,13 @@ const TodoForm = () => {
       title: '',
       description: '',
       createdAt: new Date().toString(),
-      id: +new Date(),
+      id: latestId + 1,
       isComplete: false,
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>): void {
+    console.log('🚀 ~ onSubmit ~ values:', values);
     dispatch(addTodo(values));
 
     form.setValue('title', '');
